@@ -2,6 +2,8 @@
 
 Конференция для разработчиков, дизайнеров и продуктов в сфере зообизнеса и сервисов для животных.
 
+**Live Demo:** https://tolmas07.github.io/yandex-pet-day/
+
 ## Technologies
 
 - HTML5 (semantic markup)

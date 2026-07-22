@@ -946,7 +946,7 @@ input, select, textarea { font-family: inherit; }
   .hero__meta { justify-content: center; }
   .hero__buttons { justify-content: center; }
   .hero__visual { order: -1; }
-  .hero__illustration { max-width: 380px; margin: 0 auto; }
+  .hero__illustration { max-width: 280px; margin: 0 auto; }
   .hero__title { font-size: 2.8rem; }
   .benefits__grid,
   .speakers__grid { grid-template-columns: repeat(2, 1fr); }
@@ -963,11 +963,19 @@ input, select, textarea { font-family: inherit; }
   .header__cta { display: none; }
   .header__inner { padding: 0 20px; }
   .section { padding: var(--section-gap) 20px; }
-  .hero { padding: 110px 20px 50px; }
-  .hero__title { font-size: 2.2rem; }
-  .hero__desc { font-size: 1rem; }
-  .hero__buttons { flex-direction: column; width: 100%; }
+  .hero {
+    padding: 100px 20px 40px;
+    min-height: auto;
+    gap: 30px;
+  }
+  .hero__title { font-size: 2rem; margin-bottom: 16px; }
+  .hero__desc { font-size: 0.95rem; margin-bottom: 12px; }
+  .hero__meta { gap: 16px; margin-bottom: 24px; }
+  .hero__buttons { flex-direction: column; width: 100%; gap: 10px; }
   .hero__buttons .btn { justify-content: center; width: 100%; }
+  .hero__visual { padding: 10px 20px; }
+  .hero__illustration { max-width: 200px; }
+  .hero__emoji { font-size: 5rem; }
   .section__title { font-size: 1.8rem; }
   .benefits__grid,
   .speakers__grid { grid-template-columns: 1fr; }
@@ -983,15 +991,16 @@ input, select, textarea { font-family: inherit; }
   .footer__inner { flex-direction: column; gap: 16px; text-align: center; }
   .footer__links { flex-direction: column; gap: 8px; }
   .float-badge { display: none; }
-  .hero__emoji { font-size: 5rem; }
   .popup { padding: 28px 20px; }
   .scroll-top { bottom: 20px; right: 20px; }
 }
 
 @media (max-width: 480px) {
-  .hero__title { font-size: 1.85rem; }
-  .hero__meta { flex-direction: column; gap: 12px; align-items: center; }
-  .hero__visual { padding: 20px 30px; }
+  .hero__title { font-size: 1.7rem; }
+  .hero__meta { flex-direction: column; gap: 10px; align-items: center; }
+  .hero__visual { padding: 10px 15px; }
+  .hero__illustration { max-width: 160px; }
+  .hero__emoji { font-size: 4rem; }
 }
 
 /* ===== ANIMATIONS (scroll reveal) ===== */

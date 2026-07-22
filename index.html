@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yandex Pet Day — Конференция для pet-индустрии</title>
+  <meta name="description" content="Конференция для разработчиков, дизайнеров и продуктов в сфере зообизнеса и сервисов для животных. 20 июня 2025, Москва + Онлайн.">
+  <meta property="og:title" content="Yandex Pet Day 2025">
+  <meta property="og:description" content="Конференция для pet-индустрии: зооморфизм, ИИ-диагностика, монетизация. 20 июня 2025.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; scroll-padding-top: 80px; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1a1a2e;
+      background: #faf9f7;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; font-family: inherit; }
+    input, select, textarea { font-family: inherit; }
+
+    /* ===== FOCUS STATES (accessibility) ===== */
+    :focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    .nav a:focus-visible,
+    .btn:focus-visible,
+    .header__cta:focus-visible,
+    .faq-item__q:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* ===== VARIABLES ===== */
+    :root {
+      --primary: #ff6b35;
+      --primary-hover: #e85a25;
+      --primary-light: #fff4ef;
+      --dark: #1a1a2e;
+      --dark-soft: #2d2d44;
+      --text: #3d3d56;
+      --text-light: #6b6b80;
+      --bg: #faf9f7;
+      --bg-white: #ffffff;
+      --border: #e8e8ed;
+      --accent-blue: #4361ee;
+      --accent-green: #2ec4b6;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --max-w: 1200px;
+      --section-gap: 100px;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(250, 249, 247, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    .header.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+    .header__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+    .logo__icon {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+    .nav { display: flex; gap: 32px; align-items: center; }
+    .nav a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.2s;
+    }
+    .nav a:hover { color: var(--primary); }
+    .nav a:hover::after { width: 100%; }
+    .header__cta {
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .header__cta:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+    /* ===== MOBILE MENU ===== */
+    .burger {
+      display: none;
+      background: none;
+      padding: 8px;
+      z-index: 110;
+      width: 40px;
+      height: 40px;
+      position: relative;
+    }
+    .burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--dark);
+      position: absolute;
+      left: 9px;
+      transition: all 0.3s;
+    }
+    .burger span:nth-child(1) { top: 13px; }
+    .burger span:nth-child(2) { top: 19px; }
+    .burger span:nth-child(3) { top: 25px; }
+    .burger.active span:nth-child(1) { top: 19px; transform: rotate(45deg); }
+    .burger.active span:nth-child(2) { opacity: 0; }
+    .burger.active span:nth-child(3) { top: 19px; transform: rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(250, 249, 247, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 105;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .mobile-nav.active {
+      display: flex;
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-nav a {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--dark);
+      transition: color 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--primary); }
+    .mobile-nav .btn { margin-top: 8px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 160px 40px 80px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .hero__badge::before { content: ''; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; }
+    .hero__title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .hero__title span { color: var(--primary); }
+    .hero__desc {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      max-width: 500px;
+    }
+    .hero__meta {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+    .hero__meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .hero__meta-item svg { width: 18px; height: 18px; color: var(--primary); flex-shrink: 0; }
+    .hero__buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+    .btn--primary { background: var(--primary); color: #fff; }
+    .btn--primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,107,53,0.3); }
+    .btn--outline { background: transparent; color: var(--dark); border: 2px solid var(--border); }
+    .btn--outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn--sm { padding: 10px 20px; font-size: 0.9rem; }
+
+    .hero__visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 60px;
+    }
+    .hero__illustration {
+      width: 100%;
+      max-width: 520px;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, var(--primary-light) 0%, #fff 50%, #eef2ff 100%);
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .hero__illustration::before {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.08;
+      top: -40px;
+      right: -40px;
+    }
+    .hero__illustration::after {
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+      opacity: 0.06;
+      bottom: -30px;
+      left: -30px;
+    }
+    .hero__emoji {
+      font-size: 8rem;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1));
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* floating badges */
+    .float-badge {
+      position: absolute;
+      background: var(--bg-white);
+      border-radius: 14px;
+      padding: 12px 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+      white-space: nowrap;
+      animation: float 5s ease-in-out infinite;
+    }
+    .float-badge--left-top { top: 10%; left: 0; animation-delay: -1s; }
+    .float-badge--right { top: 50%; right: 0; transform: translateY(-50%); animation-delay: -2s; }
+    .float-badge--left-bottom { bottom: 10%; left: 0; animation-delay: -3s; }
+    .float-badge__icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .float-badge__icon--orange { background: var(--primary-light); }
+    .float-badge__icon--blue { background: #eef2ff; }
+    .float-badge__icon--green { background: #e6faf8; }
+    .float-badge__label {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      font-weight: 400;
+    }
+
+    /* ===== SECTION COMMON ===== */
+    .section { padding: var(--section-gap) 40px; }
+    .section__inner { max-width: var(--max-w); margin: 0 auto; }
+    .section__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .section__title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .section__subtitle {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 600px;
+    }
+
+    /* ===== ABOUT ===== */
+    .about__content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin-top: 48px;
+      align-items: stretch;
+    }
+    .about__text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .about__text p {
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    .about__highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+    }
+    .highlight-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .highlight-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .highlight-card__num {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .highlight-card__title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+    .highlight-card__text { font-size: 0.85rem; color: var(--text-light); }
+
+    /* ===== BENEFITS ===== */
+    .benefits { background: var(--bg-white); }
+    .benefits__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .benefit-card {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid transparent;
+    }
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+      border-color: var(--border);
+    }
+    .benefit-card__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+    .benefit-card__icon--1 { background: var(--primary-light); }
+    .benefit-card__icon--2 { background: #eef2ff; }
+    .benefit-card__icon--3 { background: #e6faf8; }
+    .benefit-card__title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .benefit-card__text {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* ===== SPEAKERS ===== */
+    .speakers { background: var(--bg-white); }
+    .speakers__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .speaker-card {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .speaker-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+    }
+    .speaker-card__avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .speaker-card__avatar::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 3px solid var(--primary);
+      opacity: 0.3;
+    }
+    .speaker-card__avatar--1 { background: linear-gradient(135deg, var(--primary), #ff8f65); }
+    .speaker-card__avatar--2 { background: linear-gradient(135deg, var(--accent-blue), #6b8cff); }
+    .speaker-card__avatar--3 { background: linear-gradient(135deg, var(--accent-green), #5dd9cd); }
+    .speaker-card__name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .speaker-card__role {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+    }
+    .speaker-card__topic {
+      background: var(--bg-white);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 500;
+      border: 1px solid var(--border);
+    }
+
+    /* ===== PROGRAM ===== */
+    .program__timeline {
+      margin-top: 48px;
+      position: relative;
+    }
+    .program__timeline::before {
+      content: '';
+      position: absolute;
+      left: 140px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+    .program__item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 40px;
+      padding: 24px 0;
+      position: relative;
+    }
+    .program__item::before {
+      content: '';
+      position: absolute;
+      left: 140px;
+      top: 32px;
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      border-radius: 50%;
+      transform: translateX(-5px);
+      z-index: 1;
+    }
+    .program__item--break::before { background: var(--border); }
+    .program__time {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-light);
+      text-align: right;
+      padding-top: 4px;
+    }
+    .program__card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      transition: border-color 0.2s;
+    }
+    .program__card:hover { border-color: var(--primary); }
+    .program__item--break .program__card {
+      background: var(--bg);
+      border-style: dashed;
+    }
+    .program__card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .program__card-speaker {
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .program__card-desc {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    /* ===== REGISTRATION ===== */
+    .register {
+      background: var(--dark);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .register::before {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.08;
+      top: -100px;
+      right: -100px;
+    }
+    .register::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+      opacity: 0.05;
+      bottom: -80px;
+      left: -80px;
+    }
+    .register .section__label { color: var(--primary); }
+    .register .section__subtitle { color: rgba(255,255,255,0.6); }
+    .register__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: var(--section-gap) 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .register__form {
+      max-width: 520px;
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+    }
+    .form-group label .required { color: var(--primary); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.35); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255,107,53,0.15);
+    }
+    .form-group select option { background: var(--dark); color: #fff; }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group.error input,
+    .form-group.error select,
+    .form-group.error textarea { border-color: #ef4444; }
+    .form-group .error-msg {
+      font-size: 0.8rem;
+      color: #ef4444;
+      display: none;
+    }
+    .form-group.error .error-msg { display: block; }
+    .register__submit {
+      background: var(--primary);
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .register__submit:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .register__submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .register__hint {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 4px;
+    }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .form-success.active { display: block; }
+    .form-success__icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+    .form-success__title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .form-success__text {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ===== FAQ ===== */
+    .faq__list {
+      margin-top: 48px;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .faq-item {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .faq-item:hover { border-color: var(--primary); }
+    .faq-item__q {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: transparent;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: left;
+      color: var(--dark);
+      gap: 16px;
+    }
+    .faq-item__icon {
+      font-size: 1.3rem;
+      color: var(--primary);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+      width: 24px;
+      text-align: center;
+    }
+    .faq-item.open .faq-item__icon { transform: rotate(45deg); }
+    .faq-item__a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .faq-item.open .faq-item__a {
+      max-height: 400px;
+    }
+    .faq-item__a-inner {
+      padding: 0 24px 20px;
+    }
+    .faq-item__a p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      background: var(--primary-light);
+      padding: 60px 40px;
+      text-align: center;
+    }
+    .cta-banner__inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .cta-banner__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .cta-banner__text {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 24px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.5);
+      padding: 40px;
+    }
+    .footer__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer__copy { font-size: 0.85rem; }
+    .footer__links { display: flex; gap: 24px; }
+    .footer__links a {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.2s;
+    }
+    .footer__links a:hover { color: #fff; }
+
+    /* ===== SCROLL TO TOP ===== */
+    .scroll-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(255,107,53,0.3);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 90;
+    }
+    .scroll-top.visible {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+    .scroll-top:hover { background: var(--primary-hover); }
+    .scroll-top svg { width: 20px; height: 20px; }
+
+    /* ===== POPUP ===== */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .popup-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .popup {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      max-width: 480px;
+      width: 100%;
+      padding: 40px;
+      position: relative;
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.3s;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .popup-overlay.active .popup {
+      transform: translateY(0) scale(1);
+    }
+    .popup__close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--text-light);
+      transition: background 0.2s, color 0.2s;
+    }
+    .popup__close:hover { background: var(--border); color: var(--dark); }
+    .popup__title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .popup__text {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 24px;
+    }
+    .popup .form-group label { color: var(--text); }
+    .popup .form-group input,
+    .popup .form-group textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--dark);
+    }
+    .popup .form-group input::placeholder,
+    .popup .form-group textarea::placeholder { color: var(--text-light); }
+    .popup .form-group input:focus,
+    .popup .form-group textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+    }
+    .popup .form-group.error input,
+    .popup .form-group.error textarea { border-color: #ef4444; }
+    .popup .form-group .error-msg { color: #ef4444; }
+    .popup__submit {
+      width: 100%;
+      background: var(--primary);
+      color: #fff;
+      padding: 14px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+    .popup__submit:hover { background: var(--primary-hover); }
+    .popup__submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .popup .form-success { padding: 20px 0; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 120px; text-align: center; }
+      .hero__content { display: flex; flex-direction: column; align-items: center; }
+      .hero__desc { max-width: 100%; }
+      .hero__meta { justify-content: center; }
+      .hero__buttons { justify-content: center; }
+      .hero__visual { order: -1; }
+      .hero__illustration { max-width: 380px; margin: 0 auto; }
+      .hero__title { font-size: 2.8rem; }
+      .benefits__grid,
+      .speakers__grid { grid-template-columns: repeat(2, 1fr); }
+      .about__content { grid-template-columns: 1fr; gap: 40px; }
+      .program__timeline::before { left: 100px; }
+      .program__item { grid-template-columns: 90px 1fr; gap: 24px; }
+      .program__item::before { left: 100px; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --section-gap: 64px; }
+      .nav { display: none; }
+      .burger { display: block; }
+      .header__cta { display: none; }
+      .header__inner { padding: 0 20px; }
+      .section { padding: var(--section-gap) 20px; }
+      .hero { padding: 110px 20px 50px; }
+      .hero__title { font-size: 2.2rem; }
+      .hero__desc { font-size: 1rem; }
+      .hero__buttons { flex-direction: column; width: 100%; }
+      .hero__buttons .btn { justify-content: center; width: 100%; }
+      .section__title { font-size: 1.8rem; }
+      .benefits__grid,
+      .speakers__grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .program__timeline::before { display: none; }
+      .program__item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .program__item::before { display: none; }
+      .program__time { text-align: left; }
+      .register__inner { padding: var(--section-gap) 20px; }
+      .footer__inner { flex-direction: column; gap: 16px; text-align: center; }
+      .footer__links { flex-direction: column; gap: 8px; }
+      .float-badge { display: none; }
+      .hero__emoji { font-size: 5rem; }
+      .popup { padding: 28px 20px; }
+      .scroll-bottom { bottom: 20px; right: 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero__title { font-size: 1.85rem; }
+      .hero__meta { flex-direction: column; gap: 12px; align-items: center; }
+      .hero__visual { padding: 20px 30px; }
+    }
+
+    /* ===== ANIMATIONS (scroll reveal) ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header" role="banner">
+    <div class="header__inner">
+      <a href="#" class="logo" aria-label="Yandex Pet Day — на главную">
+        <div class="logo__icon" aria-hidden="true">🐾</div>
+        <span>Pet Day</span>
+      </a>
+      <nav class="nav" role="navigation" aria-label="Основная навигация">
+        <a href="#about">О конференции</a>
+        <a href="#speakers">Спикеры</a>
+        <a href="#program">Программа</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="#register" class="header__cta">Участвовать</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Мобильная навигация">
+    <a href="#about">О конференции</a>
+    <a href="#speakers">Спикеры</a>
+    <a href="#program">Программа</a>
+    <a href="#faq">FAQ</a>
+    <a href="#register" class="btn btn--primary">Участвовать</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero__content">
+      <div class="hero__badge">Конференция 2025</div>
+      <h1 class="hero__title">
+        Yandex<br><span>Pet Day</span>
+      </h1>
+      <p class="hero__desc">
+        Конференция для разработчиков, дизайнеров и продуктов, которые делают продукты для владельцев домашних животных и их питомцев
+      </p>
+      <div class="hero__meta">
+        <div class="hero__meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          20 июня 2025
+        </div>
+        <div class="hero__meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          11:00
+        </div>
+        <div class="hero__meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Москва + Онлайн
+        </div>
+      </div>
+      <div class="hero__buttons">
+        <a href="#register" class="btn btn--primary">
+          Участвовать
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#program" class="btn btn--outline">Смотреть программу</a>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="float-badge float-badge--left-top">
+        <div class="float-badge__icon float-badge__icon--orange" aria-hidden="true">🤖</div>
+        <div><div class="float-badge__label">Тренд</div>ИИ-диагностика</div>
+      </div>
+      <div class="hero__illustration" role="img" aria-label="Иллюстрация конференции для владельцев животных">
+        <div class="hero__emoji" aria-hidden="true">🐕</div>
+      </div>
+      <div class="float-badge float-badge--right">
+        <div class="float-badge__icon float-badge__icon--blue" aria-hidden="true">📊</div>
+        <div><div class="float-badge__label">Тема</div>Pet-tech</div>
+      </div>
+      <div class="float-badge float-badge--left-bottom">
+        <div class="float-badge__icon float-badge__icon--green" aria-hidden="true">💊</div>
+        <div><div class="float-badge__label">Фокус</div>Здоровье</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about" id="about">
+    <div class="section__inner">
+      <div class="section__label">О конференции</div>
+      <h2 class="section__title">Цифровые продукты<br>для pet-индустрии</h2>
+      <div class="about__content">
+        <div class="about__text">
+          <p>
+            Разбираем кейсы: как зооморфизм в интерфейсах повышает удержание, почему ИИ-диагностика питомцев — новый рынок, и как монетизировать аудиторию, которая готова платить за здоровье и комфорт своих животных.
+          </p>
+          <p>
+            На конференции соберутся ключевые представители pet-индустрии, владельцы digital-продуктов, топ-менеджеры технологических компаний и инвесторы.
+          </p>
+        </div>
+        <div class="about__highlights">
+          <div class="highlight-card">
+            <div class="highlight-card__num" aria-hidden="true">01</div>
+            <div>
+              <div class="highlight-card__title">Зооморфизм как драйвер лояльности</div>
+              <div class="highlight-card__text">Как персонажи-животные влияют на вовлечённость пользователей</div>
+            </div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-card__num" aria-hidden="true">02</div>
+            <div>
+              <div class="highlight-card__title">ИИ-диагностика — новый рынок</div>
+              <div class="highlight-card__text">Технологии компьютерного зрения в ветеринарии</div>
+            </div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-card__num" aria-hidden="true">03</div>
+            <div>
+              <div class="highlight-card__title">Монетизация pet-аудитории</div>
+              <div class="highlight-card__text">Механики роста выручки в pet-tech продуктах</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="section benefits" id="benefits">
+    <div class="section__inner">
+      <div class="section__label">Возможности</div>
+      <h2 class="section__title">Вы сможете</h2>
+      <div class="benefits__grid">
+        <div class="benefit-card">
+          <div class="benefit-card__icon benefit-card__icon--1" aria-hidden="true">🎯</div>
+          <div class="benefit-card__title">Выбрать удобный формат</div>
+          <div class="benefit-card__text">Прийти лично или подключиться к онлайн-трансляции из любой точки мира</div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-card__icon benefit-card__icon--2" aria-hidden="true">🤝</div>
+          <div class="benefit-card__title">Завязать знакомства</div>
+          <div class="benefit-card__text">Новые полезные контакты с лидерами pet-рынка, инвесторами и партнёрами</div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-card__icon benefit-card__icon--3" aria-hidden="true">📈</div>
+          <div class="benefit-card__title">Узнать о трендах</div>
+          <div class="benefit-card__text">Ведущие эксперты покажут реальные кейсы роста на примерах ИИ и монетизации</div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-card__icon benefit-card__icon--1" aria-hidden="true">🛠</div>
+          <div class="benefit-card__title">Получить инструменты</div>
+          <div class="benefit-card__text">Готовые механики, которые можно применить в своём продукте сразу после конференции</div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-card__icon benefit-card__icon--2" aria-hidden="true">🎬</div>
+          <div class="benefit-card__title">Доступ к записям</div>
+          <div class="benefit-card__text">Все участники получат видео, презентации и расшифровки — доступ навсегда</div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-card__icon benefit-card__icon--3" aria-hidden="true">📜</div>
+          <div class="benefit-card__title">Сертификат участника</div>
+          <div class="benefit-card__text">Именной сертификат для всех участников — онлайн и офлайн</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEAKERS -->
+  <section class="section speakers" id="speakers">
+    <div class="section__inner">
+      <div class="section__label">Спикеры</div>
+      <h2 class="section__title">Эксперты рынка</h2>
+      <p class="section__subtitle">Ведущие представители pet-индустрии поделятся реальным опытом</p>
+      <div class="speakers__grid">
+        <div class="speaker-card">
+          <div class="speaker-card__avatar speaker-card__avatar--1">АС</div>
+          <div class="speaker-card__name">Андрей Соколов</div>
+          <div class="speaker-card__role">Head of Product Design, Яндекс</div>
+          <div class="speaker-card__topic">Компьютерное зрение в ветеринарии</div>
+        </div>
+        <div class="speaker-card">
+          <div class="speaker-card__avatar speaker-card__avatar--2">МП</div>
+          <div class="speaker-card__name">Мария Подольская</div>
+          <div class="speaker-card__role">Head of AI, Лаборатория инноваций</div>
+          <div class="speaker-card__topic">Зооморфизм как драйвер лояльности</div>
+        </div>
+        <div class="speaker-card">
+          <div class="speaker-card__avatar speaker-card__avatar--3">ПС</div>
+          <div class="speaker-card__name">Павел Сидоров</div>
+          <div class="speaker-card__role">CEO, Зоо-Маркет</div>
+          <div class="speaker-card__topic">От стартапа до маркетплейса №1</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section class="section program" id="program">
+    <div class="section__inner">
+      <div class="section__label">Программа</div>
+      <h2 class="section__title">Расписание дня</h2>
+      <p class="section__subtitle">Ивент-пространство «Академия», Ленинградский проспект 3, Москва</p>
+      <div class="program__timeline" role="list">
+        <div class="program__item" role="listitem">
+          <div class="program__time">10:00 — 10:30</div>
+          <div class="program__card">
+            <div class="program__card-title">Приветственный кофе</div>
+            <div class="program__card-desc">Нетворкинг с участниками и партнёрами (только офлайн)</div>
+          </div>
+        </div>
+        <div class="program__item" role="listitem">
+          <div class="program__time">11:00 — 11:30</div>
+          <div class="program__card">
+            <div class="program__card-title">Вводное слово</div>
+            <div class="program__card-speaker">Открытие конференции</div>
+          </div>
+        </div>
+        <div class="program__item" role="listitem">
+          <div class="program__time">11:30 — 12:10</div>
+          <div class="program__card">
+            <div class="program__card-title">Компьютерное зрение в ветеринарии</div>
+            <div class="program__card-speaker">Андрей Соколов, Яндекс</div>
+          </div>
+        </div>
+        <div class="program__item" role="listitem">
+          <div class="program__time">12:10 — 12:50</div>
+          <div class="program__card">
+            <div class="program__card-title">Зооморфизм как драйвер лояльности</div>
+            <div class="program__card-speaker">Мария Подольская, Лаборатория инноваций</div>
+          </div>
+        </div>
+        <div class="program__item program__item--break" role="listitem">
+          <div class="program__time">12:50 — 13:10</div>
+          <div class="program__card">
+            <div class="program__card-title">Перерыв</div>
+          </div>
+        </div>
+        <div class="program__item" role="listitem">
+          <div class="program__time">13:10 — 13:40</div>
+          <div class="program__card">
+            <div class="program__card-title">От стартапа до маркетплейса №1: ошибки и победы</div>
+            <div class="program__card-speaker">Павел Сидоров, Зоо-Маркет</div>
+          </div>
+        </div>
+        <div class="program__item" role="listitem">
+          <div class="program__time">13:40 — 15:00</div>
+          <div class="program__card">
+            <div class="program__card-title">Дискуссия: Инвестиции в Pet-технологии — пузырь или новая нефть?</div>
+            <div class="program__card-speaker">Панельная дискуссия</div>
+          </div>
+        </div>
+        <div class="program__item" role="listitem">
+          <div class="program__time">15:00 — 16:30</div>
+          <div class="program__card">
+            <div class="program__card-title">Нетворкинг</div>
+            <div class="program__card-desc">Неформальное общение, закрытый бизнес-завтрак для офлайн-участников</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRATION -->
+  <section class="register" id="register">
+    <div class="register__inner">
+      <div class="section__label">Регистрация</div>
+      <h2 class="section__title" style="color:#fff">Присоединяйтесь</h2>
+      <p class="section__subtitle">Выберите формат участия (онлайн / офлайн)</p>
+      <form class="register__form" id="register-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reg-name">Имя <span class="required">*</span></label>
+            <input type="text" id="reg-name" name="name" placeholder="Ваше имя" required>
+            <span class="error-msg">Введите имя</span>
+          </div>
+          <div class="form-group">
+            <label for="reg-surname">Фамилия <span class="required">*</span></label>
+            <input type="text" id="reg-surname" name="surname" placeholder="Ваша фамилия" required>
+            <span class="error-msg">Введите фамилию</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reg-email">Почта <span class="required">*</span></label>
+          <input type="email" id="reg-email" name="email" placeholder="email@example.com" required>
+          <span class="error-msg">Введите корректную почту</span>
+        </div>
+        <div class="form-group">
+          <label for="reg-company">Компания</label>
+          <input type="text" id="reg-company" name="company" placeholder="Название компании">
+        </div>
+        <div class="form-group">
+          <label for="reg-format">Формат участия <span class="required">*</span></label>
+          <select id="reg-format" name="format" required>
+            <option value="">Выберите формат</option>
+            <option value="offline">Офлайн — Москва, «Академия»</option>
+            <option value="online">Онлайн — трансляция</option>
+          </select>
+          <span class="error-msg">Выберите формат</span>
+        </div>
+        <p class="register__hint">* Офлайн: количество мест ограничено. Онлайн: ссылку на трансляцию пришлём на почту за час до начала.</p>
+        <button type="submit" class="register__submit">Зарегистрироваться</button>
+      </form>
+      <div class="form-success" id="register-success">
+        <div class="form-success__icon" aria-hidden="true">🎉</div>
+        <div class="form-success__title">Вы зарегистрированы!</div>
+        <div class="form-success__text">Письмо с подтверждением приходит на почту в течение 5 минут</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq" id="faq">
+    <div class="section__inner">
+      <div class="section__label">Вопрос-ответ</div>
+      <h2 class="section__title">Частые вопросы</h2>
+      <div class="faq__list" role="list">
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__q" aria-expanded="false">
+            Кому точно стоит прийти на конференцию?
+            <span class="faq-item__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a" role="region">
+            <div class="faq-item__a-inner">
+              <p>Владельцам и сотрудникам digital-продуктов в сфере зообизнеса: маркетплейсы, ветклиники, приложения для груминга, зоомагазины, агрегаторы. А также маркетологам, продактам, дизайнерам и разработчикам, которые хотят зайти в этот быстрорастущий рынок или масштабировать свои проекты.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__q" aria-expanded="false">
+            Я могу прийти с питомцем?
+            <span class="faq-item__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a" role="region">
+            <div class="faq-item__a-inner">
+              <p>Да, если выбираете офлайн-формат! Мы организуем специальную зону для животных с водой, мисками и необходимыми принадлежностями. Но убедительная просьба: убедитесь, что питомец социализирован и комфортно чувствует себя в обществе людей и других животных. О наличии питомца нужно предупредить заранее при регистрации.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__q" aria-expanded="false">
+            Будет ли запись докладов для онлайн-участников?
+            <span class="faq-item__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a" role="region">
+            <div class="faq-item__a-inner">
+              <p>Обязательно. Все зарегистрированные участники (и офлайн, и онлайн) получат доступ к видеозаписям, презентациям спикеров и текстовым расшифровкам в течение 3 дней после конференции. Доступ остаётся у вас навсегда.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__q" aria-expanded="false">
+            Я из другого города. Есть ли смысл ехать в Москву или достаточно онлайн?
+            <span class="faq-item__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a" role="region">
+            <div class="faq-item__a-inner">
+              <p>Зависит от ваших целей. Если вам нужны исключительно знания и контент — онлайн-формата достаточно. Если вы ищете партнёров, инвесторов, хотите «в живую» пообщаться с лидерами рынка и почувствовать комьюнити — приезжайте. Офлайн-участников ждёт закрытый бизнес-завтрак и неформальное общение после основной программы.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item" role="listitem">
+          <button class="faq-item__q" aria-expanded="false">
+            Будут ли сертификаты или другие документы об участии?
+            <span class="faq-item__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-item__a" role="region">
+            <div class="faq-item__a-inner">
+              <p>Да, все участники (онлайн и офлайн) получат именной сертификат участника конференции.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="cta-banner__inner">
+      <h2 class="cta-banner__title">Остались вопросы?</h2>
+      <p class="cta-banner__text">Напишите нам — ответим на все вопросы о конференции</p>
+      <button class="btn btn--primary" id="open-popup" type="button">Задать вопрос</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__copy">&copy; Yandex Pet Day, 2025</div>
+      <div class="footer__links">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Организатор — Яндекс Реклама</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCROLL TO TOP -->
+  <button class="scroll-top" id="scroll-top" aria-label="Наверх" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
+
+  <!-- POPUP: "Остались вопросы" -->
+  <div class="popup-overlay" id="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+    <div class="popup">
+      <button class="popup__close" id="popup-close" aria-label="Закрыть" type="button">&times;</button>
+      <h3 class="popup__title" id="popup-title">Задайте вопрос</h3>
+      <p class="popup__text">Мы ответим вам на почту в течение 24 часов</p>
+      <form id="popup-form" novalidate>
+        <div class="form-group">
+          <label for="popup-name">Имя <span class="required">*</span></label>
+          <input type="text" id="popup-name" name="name" placeholder="Ваше имя" required>
+          <span class="error-msg">Введите имя</span>
+        </div>
+        <div class="form-group">
+          <label for="popup-email">Почта <span class="required">*</span></label>
+          <input type="email" id="popup-email" name="email" placeholder="email@example.com" required>
+          <span class="error-msg">Введите корректную почту</span>
+        </div>
+        <div class="form-group">
+          <label for="popup-question">Вопрос <span class="required">*</span></label>
+          <textarea id="popup-question" name="question" placeholder="Опишите ваш вопрос" required></textarea>
+          <span class="error-msg">Введите вопрос</span>
+        </div>
+        <button type="submit" class="popup__submit">Отправить</button>
+      </form>
+      <div class="form-success" id="popup-success">
+        <div class="form-success__icon" aria-hidden="true">✅</div>
+        <div class="form-success__title">Вопрос отправлен!</div>
+        <div class="form-success__text">Мы свяжемся с вами в ближайшее время</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Header scroll =====
+    const header = document.getElementById('header');
+    const scrollTopBtn = document.getElementById('scroll-top');
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      header.classList.toggle('scrolled', y > 20);
+      scrollTopBtn.classList.toggle('visible', y > 500);
+    }, { passive: true });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ===== Mobile menu =====
+    const burger = document.getElementById('burger');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    burger.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.contains('active');
+      burger.classList.toggle('active');
+      mobileNav.classList.toggle('active');
+      burger.setAttribute('aria-expanded', !isOpen);
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('active');
+        mobileNav.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ===== FAQ accordion =====
+    document.querySelectorAll('.faq-item__q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isOpen = item.classList.contains('open');
+        // close all
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-item__q').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // ===== Form validation =====
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function validateForm(form, fields) {
+      let valid = true;
+      fields.forEach(({ name, type }) => {
+        const group = form.querySelector(`[name="${name}"]`).closest('.form-group');
+        const value = form.querySelector(`[name="${name}"]`).value.trim();
+        let fieldValid = true;
+
+        if (type === 'email') {
+          fieldValid = value && validateEmail(value);
+        } else {
+          fieldValid = value.length > 0;
+        }
+
+        group.classList.toggle('error', !fieldValid);
+        if (!fieldValid) valid = false;
+      });
+      return valid;
+    }
+
+    function clearErrors(form) {
+      form.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
+    }
+
+    // ===== Registration form =====
+    const registerForm = document.getElementById('register-form');
+    const registerSuccess = document.getElementById('register-success');
+
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      clearErrors(registerForm);
+
+      if (validateForm(registerForm, [
+        { name: 'name', type: 'text' },
+        { name: 'surname', type: 'text' },
+        { name: 'email', type: 'email' },
+        { name: 'format', type: 'text' }
+      ])) {
+        registerForm.style.display = 'none';
+        registerSuccess.classList.add('active');
+      }
+    });
+
+    // ===== Popup =====
+    const popupOverlay = document.getElementById('popup-overlay');
+    const popupClose = document.getElementById('popup-close');
+    const openPopupBtn = document.getElementById('open-popup');
+    const popupForm = document.getElementById('popup-form');
+    const popupSuccess = document.getElementById('popup-success');
+
+    function openPopup() {
+      popupOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      popupClose.focus();
+    }
+
+    function closePopup() {
+      popupOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      openPopupBtn.focus();
+    }
+
+    openPopupBtn.addEventListener('click', openPopup);
+    popupClose.addEventListener('click', closePopup);
+
+    popupOverlay.addEventListener('click', (e) => {
+      if (e.target === popupOverlay) closePopup();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
+        closePopup();
+      }
+    });
+
+    popupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      clearErrors(popupForm);
+
+      if (validateForm(popupForm, [
+        { name: 'name', type: 'text' },
+        { name: 'email', type: 'email' },
+        { name: 'question', type: 'text' }
+      ])) {
+        popupForm.style.display = 'none';
+        popupSuccess.classList.add('active');
+      }
+    });
+
+    // ===== Scroll reveal =====
+    const revealElements = document.querySelectorAll(
+      '.benefit-card, .speaker-card, .highlight-card, .program__item, .faq-item'
+    );
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(el => {
+      el.classList.add('reveal');
+      revealObserver.observe(el);
+    });
+
+    // ===== Smooth scroll for anchor links (fallback) =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

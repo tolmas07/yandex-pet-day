@@ -55,7 +55,7 @@ input, select, textarea { font-family: inherit; }
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 200;
   background: rgba(250, 249, 247, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -852,7 +852,7 @@ input, select, textarea { font-family: inherit; }
   inset: 0;
   background: rgba(0,0,0,0.5);
   backdrop-filter: blur(4px);
-  z-index: 200;
+  z-index: 300;
   display: flex;
   align-items: center;
   justify-content: center;
